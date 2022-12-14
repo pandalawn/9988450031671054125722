@@ -1,0 +1,90 @@
+name: CI
+
+on: push
+env:
+  API: 1123214
+  TEMPLATE_KEY: base_flutter
+  TEMPLATE_TYPE: flutter
+  USER_ID: 631060e7591d3b2a1ea23f23
+  PROJECT_ID: 6310618a591d3b2a1ea23f32
+  typeBuild: apk
+  pathOutputBuild: build/Android/Android.apk
+
+jobs:
+  build:
+    name: Build my project 
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-build-Android
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE:  |
+            <?xml version="1.0" encoding="UTF-8"?><root>
+                <License id="Terms">
+                    <MachineBindings>
+                        <Binding Key="1" Value="576562626572264761624c65526f7578"/>
+                        <Binding Key="2" Value="576562626572264761624c65526f7578"/>
+                    </MachineBindings>
+                    <MachineID Value="D7nTUnjNAmtsUMcnoyrqkgIbYdM="/>
+                    <SerialHash Value="fba2010ed03f4270b0746454eee3460ccc6ce088"/>
+                    <Features>
+                        <Feature Value="33"/>
+                        <Feature Value="1"/>
+                        <Feature Value="12"/>
+                        <Feature Value="2"/>
+                        <Feature Value="24"/>
+                        <Feature Value="3"/>
+                        <Feature Value="36"/>
+                        <Feature Value="17"/>
+                        <Feature Value="19"/>
+                        <Feature Value="62"/>
+                        <Feature Value="60"/>
+                    </Features>
+                    <DeveloperData Value="AQAAAEY0LThDUVctTlE4US1YREI3LTZXVVAtUkVZNg=="/>
+                    <SerialMasked Value="F4-8CQW-NQ8Q-XDB7-6WUP-XXXX"/>
+                    <StartDate Value="2017-12-22T00:00:00"/>
+                    <StopDate Value="2023-01-13T22:15:26"/>
+                    <UpdateDate Value="2022-12-15T21:15:25"/>
+                    <InitialActivationDate Value="2017-12-22T01:13:00"/>
+                    <LicenseVersion Value="6.x"/>
+                    <ClientProvidedVersion Value="2019.2.11f1"/>
+                    <AlwaysOnline Value="false"/>
+                    <Entitlements>
+                        <Entitlement Ns="unity_editor" Tag="UnityPersonal" Type="EDITOR" ValidTo="9999-12-31T00:00:00"/>
+                        <Entitlement Ns="unity_editor" Tag="DarkSkin" Type="EDITOR_FEATURE" ValidTo="9999-12-31T00:00:00"/>
+                    </Entitlements>
+                </License>
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#Terms"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>4LTBgL5Cd+2W8FF1PHIYZ1Blg8s=</DigestValue></Reference></SignedInfo><SignatureValue>BbXE2xhdJd6/7bGppI2Cgx5JzrOhc4KbxEXQ7Yvij1WTWjbXwRuCWoDGvlSQebAdbIJjtA/yByYO&#13;
+            mekz/EE2rGXhbhttjadCIraE9SXmGmctSAHisSCWrR1UFCH8EoBQkl/X3WoQLAYWyI8/OC/m5UuH&#13;
+            RGRjFEeUZmlncCs6QXoMmSsb6ihsbAOseW2ZxHHJssSFgyZ/WeBBnJbhkhgnxrI6KhDNe0+qfMf8&#13;
+            /uXiLDH1m3pGILS1Vtkp2Vi50HQKl8JZM8ICH1BMwQ5HMWT1OBduIxv+Xu7tC47UGxsTmAVCKJGq&#13;
+            OopzMnosmD2WntgZ049jzW5kyDgcWVHYhw2u9A==</SignatureValue></Signature></root>
+          UNITY_EMAIL: devmacmasyadi@gmail.com
+          UNITY_PASSWORD: demak1997
+        with:
+          targetPlatform: Android
+          androidAppBundle: false
+          androidVersionCode: 100
+          androidKeystoreName: user # This file won't exist, but this property needs to exist.
+          androidKeystoreBase64: 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
+          androidKeystorePass: 1ikFmer0101
+          androidKeyaliasName: IkhwanGamer
+          androidKeyaliasPass: 1ikFmer0101
+      #Output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Android.apk
+          path: build/Android/Android.apk
